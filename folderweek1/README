@@ -22,3 +22,40 @@ Learned: open new data file in R and an overview of the data.
 Choose the columns you want to look at and apply -> 1 = row and 2 = column, where yuw ant to look at each class for colunmns in the data file. 
 Making a frequency table with PNG and proportion command. where proportions will be barplotted. 
 Analyses with finance as dependent variable and admin and hr as the predictiors. -> su mary = summarizer. 
+
+
+Uncertainty:
+browser <- read.csv("C:/Users/roosjenolet/Downloads/web-browsers.csv") -> can also open the data with the file opener tap 
+dim(browser) 
+str(browser) -> structure 
+names(browser) -> names of the columns 
+nrow(browser) / ncol(browser) -> number of rows and columns 
+
+ mean(browser$spend); var(browser$spend)/1e4; sqrt(var(browser$spend)/1e4) -> mean, variance and standard deviation of the spend column 
+can also use sd(browser$spend) directly for standard deviation. 
+for median: median(browser$spend)
+for sum: sum(browser$spend)
+
+Bootstrap: 
+B <- 1000
+  mub <- c()
+  for (b in 1:1000){
+    samp_b <- sample.int(nrow(browser), replace=TRUE)
+    mub <- c(mub, mean(browser$spend[samp_b]))
+  }
+  sd(mub)
+-> estimation of the uncertainty (std) around the mean of the spend variable, using bootstrap. Use it when you want to understand the variable, without making strong parametric assumptions, see the text book. 
+
+h <- hist(mub)
+  xfit <- seq(min(mub), max(mub), length = 40) 
+  yfit <- dnorm(xfit, mean = mean(browser$spend), sd = sqrt(var(browser$spend)/1e4)) 
+  yfit <- yfit * diff(h$mids[1:2]) * length(mub) 
+ 
+  lines(xfit, yfit, col = "black", lwd = 2)
+-> scaling to frequencies, so the normal distribution is scaled such that the total area under the curve matches the total number of data points of the histogram. so that the heights of of normal curve are the same scale of histogram.
+Visual comparison between distribution of the bootstrap means and the theoretical normal distibution. 
+
+cov(betas[,"broadband"], betas[,"anychildren"])
+cov(coefficients_matrix[,"finance"], coefficients_matrix[,"hr"])
+
+
