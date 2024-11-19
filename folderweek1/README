@@ -1,1 +1,24 @@
+CEO_Diary <- read.csv("/Users/roosjenolet/Downloads/survey_response_data.csv")
 
+View(CEO_Diary)
+
+CEO_Diary[1:15,c(1:4,21,34 , 40)]
+apply(CEO_Diary,2,class)
+
+nrow(CEO_Diary) 
+ncol(CEO_Diary) -> number of columns 
+str(CEO_Diary) -> structure dataset 
+summary(CEO_Diary) -> summary data 
+
+png(file="figs/CEO_Interactions.png", width=800, height=400)
+par(mar=c(10, 4, 2, 1))  
+barplot(prop.table(table(CEO_Diary$level1)), las=2)  
+dev.off()
+
+fit2 <- glm(finance ~ admin + hr, data=CEO_Diary)
+summary(fit2)
+
+Learned: open new data file in R and an overview of the data. 
+Choose the columns you want to look at and apply -> 1 = row and 2 = column, where yuw ant to look at each class for colunmns in the data file. 
+Making a frequency table with PNG and proportion command. where proportions will be barplotted. 
+Analyses with finance as dependent variable and admin and hr as the predictiors. -> su mary = summarizer. 
